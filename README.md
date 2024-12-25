@@ -11,7 +11,7 @@ Welcome to the **Tic Tac Toe** game built with **React**! This project allows pl
 
 ## Preview
 
-![Tic Tac Toe Game](./assets/image.png)
+![Tic Tac Toe Game](src/assets/image.png)
 
 ## Technologies Used
 
