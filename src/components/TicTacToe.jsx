@@ -2,15 +2,15 @@ import React, { useState, useRef, useEffect } from 'react';
 import './TicTacToe.css';
 
 const cross = (
-  <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
-    <line x1="20" y1="20" x2="60" y2="60" stroke="white" strokeWidth="4"/>
-    <line x1="60" y1="20" x2="20" y2="60" stroke="white" strokeWidth="4"/>
+  <svg className="mark" viewBox="0 0 80 80" fill="none" aria-hidden="true">
+    <line x1="20" y1="20" x2="60" y2="60" stroke="currentColor" strokeWidth="6"/>
+    <line x1="60" y1="20" x2="20" y2="60" stroke="currentColor" strokeWidth="6"/>
   </svg>
 );
 
 const circle = (
-  <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
-    <circle cx="40" cy="40" r="20" stroke="white" strokeWidth="4" fill="none"/>
+  <svg className="mark" viewBox="0 0 80 80" fill="none" aria-hidden="true">
+    <circle cx="40" cy="40" r="22" stroke="currentColor" strokeWidth="6" fill="none"/>
   </svg>
 );
 
@@ -155,36 +155,45 @@ const TicTacToe = () => {
 
   return (
     <div className="container">
-      <h1 className="title" ref={titleRef}>
-        Tic Tac Toe In <span>React</span>
-      </h1>
-      <div className="board">
-        <div>
+      <header className="header">
+        <h1 className="title" ref={titleRef}>
+          Tic Tac Toe <span>React</span>
+        </h1>
+        <p className="subtitle">Play against an unbeatable AI</p>
+      </header>
+
+      <div className="card">
+        <div className="board">
           {[0, 1, 2].map((row) => (
-            <div key={row} style={{ display: 'flex' }}>
+            <div key={row} className="row">
               {[0, 1, 2].map((col) => {
                 const index = row * 3 + col;
+                const mark = board[index];
                 return (
-                  <div
+                  <button
                     key={index}
-                    className="boxes"
+                    className={`cell ${mark === 'x' ? 'x' : ''} ${mark === 'o' ? 'o' : ''}`}
                     onClick={() => toggle(index)}
+                    aria-label={`Cell ${index + 1}`}
                   >
-                    {board[index] === 'x' && cross}
-                    {board[index] === 'o' && circle}
-                  </div>
+                    {mark === 'x' && cross}
+                    {mark === 'o' && circle}
+                  </button>
                 );
               })}
             </div>
           ))}
         </div>
+
+        <div className="controls">
+          <button className="reset" onClick={resetGame}>Restart Game</button>
+          {aiThinking && <p className="thinking">AI is thinking...</p>}
+        </div>
       </div>
-      <button className="reset" onClick={resetGame}>
-        Reset
-      </button>
-      {aiThinking && (
-        <p className="thinking">AI is thinking...</p>
-      )}
+
+      <footer className="footer">
+        <p>Built with love and logic ♟️</p>
+      </footer>
     </div>
   );
 };
